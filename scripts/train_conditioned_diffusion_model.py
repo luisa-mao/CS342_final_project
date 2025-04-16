@@ -34,7 +34,9 @@ class DiffusionModel(nn.Module):
         outputs = (outputs / 2 + 0.5)
         return outputs
     
-def train(num_epochs):
+def train(num_epochs, dataloader, text_embedding, optimizer, mse_loss):
+    # this is pseudocode from chatgpt. it wont run yet
+    # maybe this is a better resource https://huggingface.co/docs/diffusers/en/tutorials/basic_training
     for epoch in range(num_epochs):
         for x0, text in dataloader:  # x0: image, text: string
             
@@ -69,7 +71,8 @@ def train(num_epochs):
 if __name__ == '__main__':
     model = DiffusionModel()
     input = torch.randn((5, 3, 256, 256))
-    out = model(input)
+    cond_embed = torch.randn((5, 77, 768))
+    out = model(input, cond_embed, 1)
     print(out.shape)
 
 

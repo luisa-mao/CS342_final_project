@@ -14,6 +14,7 @@ import numpy as np
 class TinyImageNetDataset(Dataset):
     def __init__(self, dataset_path = 'tiny-imagenet-200', mode = 'train'):
         super().__init__()
+        # clip feature length is 768
         self.tokenizer = CLIPTokenizer.from_pretrained("openai/clip-vit-large-patch14", torch_dtype=torch.float32)
         self.text_encoder = CLIPTextModel.from_pretrained("openai/clip-vit-large-patch14", torch_dtype=torch.float32)
         self.mode = mode
@@ -24,8 +25,6 @@ class TinyImageNetDataset(Dataset):
         self.image_to_wnid = []
         self.image_names = []
         self.len = 0
-
-        # self.max_context_length = 768
 
         # Load wnids.txt (200 valid classes)
         with open(self.wnids_path, 'r') as f:
